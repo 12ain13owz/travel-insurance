@@ -1,6 +1,5 @@
 import './globals.css'
 
-import { Theme } from '@radix-ui/themes'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
@@ -17,9 +16,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="th" className={inter.variable}>
-      <body>
-        <Theme>{children}</Theme>
+    <html lang="th">
+      <body cz-shortcut-listen="true" className={inter.variable}>
+        {children}
       </body>
     </html>
   )

@@ -44,10 +44,7 @@ export default function WhyChooseUsSection() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
           {features.map((feature: Feature, index: number) => (
-            <div
-              key={index}
-              className="p-8 bg-white rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-300"
-            >
+            <div key={index} className="p-8 bg-white rounded-2xl shadow-lg">
               <feature.icon className="h-14 w-14 text-blue-600 mb-6 mx-auto" />
               <h3 className="text-2xl font-bold mb-4 text-gray-800">{feature.title}</h3>
               <p className="text-lg text-gray-700">{feature.description}</p>

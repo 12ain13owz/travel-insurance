@@ -1,3 +1,9 @@
 @import 'tailwindcss';
-@import '@radix-ui/themes/styles.css';
+
+@plugin "flyonui" {
+  themes: corporate, black;
+}
+@import 'flyonui/variants.css';
+@source "./node_modules/flyonui/flyonui.js";
+
 @import './styles/progressbar.css';

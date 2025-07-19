@@ -1,7 +1,8 @@
-import TooltipMenu from '../shared/components/ui/tooltip-menu'
-import ProgressBar from '../shared/ui/progressbar'
-import Footer from './components/footer/footer'
-import Header from './components/header'
+import Footer from '../shared/components/layouts/footer/footer'
+import Header from '../shared/components/layouts/header'
+import Progress from '../shared/components/ui/progress/progress'
+import TooltipMenu from '../shared/components/ui/tooltip-menu/_index'
+import { themeConfig } from '../shared/types/theme.type'
 
 // ส่วนที่แสดงในทุกหน้าของ User section
 export default function UserLayout({ children }: { children: React.ReactNode }) {
@@ -9,11 +10,13 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
     <>
       {/* ส่วนที่แสดงทุกหน้า */}
       <Header></Header>
-      <ProgressBar></ProgressBar>
+      <Progress></Progress>
       <TooltipMenu></TooltipMenu>
 
       {/* ส่วนที่เปลี่ยนแปลงตาม page */}
-      <main className="min-h-screen bg-gray-50">{children}</main>
+      <main data-theme={themeConfig.lightTheme} className="min-h-screen">
+        {children}
+      </main>
 
       {/* ส่วนที่แสดงทุกหน้า */}
       <Footer></Footer>

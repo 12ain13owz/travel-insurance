@@ -1,3 +1,11 @@
+import HeaderSection from './components/header/header'
+import PlanSection from './components/plan/plan'
+
 export default function PlanPage() {
-  return 'Plan Page'
+  return (
+    <>
+      <HeaderSection></HeaderSection>
+      <PlanSection></PlanSection>
+    </>
+  )
 }

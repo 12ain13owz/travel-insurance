@@ -15,7 +15,7 @@ NProgress.configure({
   trickleSpeed: 200, // ความเร็วในการค่อยๆ เพิ่ม progress
 })
 
-export default function ProgressBar(): null {
+export default function Progress(): null {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const isNavigatingRef = useRef(false)
