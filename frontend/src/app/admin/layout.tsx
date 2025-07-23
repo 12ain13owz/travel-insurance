@@ -1,15 +1,27 @@
-import TooltipMenu from '../shared/components/ui/tooltip-menu/_index'
+import '../globals.css'
 
-// ส่วนที่แสดงในทุกหน้าของ Admin section
+import { Metadata } from 'next'
+
+import TooltipMenu from '../shared/components/ui/tooltip-menu'
+import FlyonuiScript from '../shared/scripts/flyonui.script'
+import { themeConfig } from '../shared/types/theme.type'
+
+export const metadata: Metadata = {
+  title: 'Admin Dashboard - Travel Insurance',
+  description: 'Manage travel insurance policies and claims',
+}
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <TooltipMenu></TooltipMenu>
+    <html lang="en">
+      <body cz-shortcut-listen="true" data-theme={themeConfig.darkTheme}>
+        <FlyonuiScript></FlyonuiScript>
 
-      {/* ส่วนที่เปลี่ยนแปลงตาม page */}
-      <main data-theme="black" className="min-h-screen">
-        {children}
-      </main>
-    </>
+        <TooltipMenu></TooltipMenu>
+
+        {/* ส่วนที่เปลี่ยนแปลงตาม page */}
+        <main className="min-h-screen">{children}</main>
+      </body>
+    </html>
   )
 }

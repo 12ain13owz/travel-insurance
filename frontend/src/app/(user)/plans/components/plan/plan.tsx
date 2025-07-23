@@ -1,6 +1,9 @@
 'use client'
 
-import { mockPlans } from '@/app/shared/mock/plans'
+import { useRouter } from 'next/navigation'
+
+import { navigation } from '@/app/shared/const/navigation.const'
+import { mockPlans } from '@/app/shared/mock/plans.mock'
 import { Plan } from '@/app/shared/types/plan.type'
 
 import PlanCard from './plan-card/_index'
@@ -8,8 +11,10 @@ import PlanCard from './plan-card/_index'
 export default function PlanSection() {
   const plans: Plan[] = mockPlans
 
-  function handleSelectPlan(id: string) {
-    console.log(id)
+  const router = useRouter()
+
+  const handleSelectPlan = (id: string) => {
+    router.push(navigation.INSURANCE(id))
   }
 
   return (

@@ -1,9 +1,11 @@
 @import 'tailwindcss';
-
 @plugin "flyonui" {
   themes: corporate, black;
 }
 @import 'flyonui/variants.css';
 @source "./node_modules/flyonui/flyonui.js";
 
-@import './styles/progressbar.css';
+@import 'flatpickr/dist/flatpickr.min.css';
+@import 'flyonui/src/vendor/flatpickr.css';
+
+@import './styles/progress.css';
