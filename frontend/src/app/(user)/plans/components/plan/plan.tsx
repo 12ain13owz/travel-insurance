@@ -6,16 +6,12 @@ import { navigation } from '@/app/shared/const/navigation.const'
 import { mockPlans } from '@/app/shared/mock/plans.mock'
 import { Plan } from '@/app/shared/types/plan.type'
 
-import PlanCard from './plan-card/_index'
+import PlanCard from './plan-card'
 
 export default function PlanSection() {
   const plans: Plan[] = mockPlans
-
   const router = useRouter()
-
-  const handleSelectPlan = (id: string) => {
-    router.push(navigation.INSURANCE(id))
-  }
+  const handleSelectPlan = (id: string) => router.push(navigation.INSURANCE(id))
 
   return (
     <section className="container mx-auto px-4 pb-12 -mt-16 h-full">

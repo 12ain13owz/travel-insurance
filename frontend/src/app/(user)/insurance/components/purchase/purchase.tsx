@@ -11,6 +11,7 @@ import {
 } from '@/app/shared/types/purchase.type'
 
 import PersonalInfoForm from './forms/personal-info-form'
+import TravelDetailsForm from './forms/travel-details-form'
 import ProgressStepper from './progress'
 
 interface PurchaseSectionProps {
@@ -83,6 +84,9 @@ export default function PurchaseSection({
             onNext={(data: PersonalInfo) => updateFormData('personalInfo', data)}
           />
         )
+
+      case 2:
+        return <TravelDetailsForm></TravelDetailsForm>
 
       default:
         return null

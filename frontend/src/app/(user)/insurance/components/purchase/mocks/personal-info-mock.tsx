@@ -44,8 +44,10 @@ export default function PersonalInfoMock({ onClick }: PersonalInfoMockProps) {
               </div>
 
               <div className="font-semibold text-md">{item.name}</div>
-              <div className="text-sm">
-                {item.data.nationality.toUpperCase()} • {item.data.emergencyContact.relationship}
+              <div className="flex gap-x-1 text-sm">
+                <span className="uppercase">{item.data.nationality}</span>
+                <span>•</span>
+                <span className="capitalize">{item.data.emergencyContact.relationship}</span>
               </div>
             </button>
           )

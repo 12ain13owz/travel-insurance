@@ -5,7 +5,7 @@ export interface PersonalInfo {
   lastName: string
   email: string
   phone: string
-  dateOfBirth: string
+  dateOfBirth: Date
   nationality: string
   passportNumber: string
   emergencyContact: {
@@ -17,6 +17,8 @@ export interface PersonalInfo {
   relationship?: string // For additional travelers
 }
 
+export type PersonalInfoFormState = Partial<PersonalInfo>
+
 export interface TravelDetails {
   destination: string
   departureDate: Date
@@ -25,6 +27,8 @@ export interface TravelDetails {
   numberOfTravelers: number
   tripDuration: number
 }
+
+export type TravelDetailsFormState = Partial<TravelDetails>
 
 export interface CoverageOptions {
   planId: string

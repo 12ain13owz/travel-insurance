@@ -5,14 +5,24 @@ import { cn } from '../../utils/css.utils'
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string
+  placholder?: string
+  wrapperClass?: string
   options: SelectOption[]
 }
 
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ id, label, options, ...props }, ref) => {
+  ({ id, label, placholder, wrapperClass, options, ...props }, ref) => {
     return (
-      <div className="select-floating w-full">
-        <select className={cn('select select-lg', props.className)} id={id} ref={ref} {...props}>
+      <div className={cn('select-floating w-full', wrapperClass)}>
+        <select
+          className={cn('select select-lg appearance-non', props.className)}
+          id={id}
+          ref={ref}
+          {...props}
+        >
+          <option disabled selected>
+            {placholder}
+          </option>
           {options.map((option, index) => (
             <option key={index} value={option.value}>
               {option.label}
