@@ -24,7 +24,7 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-black/50" />
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-20 md:py-32">
+      <div className="relative z-10 container mx-auto px-4 lg:px-16 py-20 md:py-32">
         <div className="max-w-3xl">
           <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
             {title}

@@ -30,10 +30,10 @@ export default function Header() {
   return (
     <header
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled || isMenuOpen ? 'bg-white/90 backdrop-blur-sm shadow-sm' : 'bg-transparent'
+        isScrolled || isMenuOpen ? 'bg-white/90 backdro p-blur-sm shadow-sm' : 'bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 lg:px-16">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Logo isScrolled={isScrolled} isMenuOpen={isMenuOpen}></Logo>
