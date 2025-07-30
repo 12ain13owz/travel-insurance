@@ -18,6 +18,11 @@ export interface PersonalInfo {
 }
 
 export type PersonalInfoFormState = Partial<PersonalInfo>
+export type PersonalInfoFormErrors = Record<
+  keyof Omit<PersonalInfo, 'emergencyContact' | 'isPrimaryApplicant' | 'relationship'>,
+  string
+> &
+  Record<keyof PersonalInfoFormState, string>
 
 export interface TravelDetails {
   destination: string

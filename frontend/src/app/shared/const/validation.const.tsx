@@ -1,4 +1,4 @@
-export const validationMessages = {
+export const message = {
   error: {
     email: 'Please enter a valid email address.',
     password:
@@ -17,7 +17,7 @@ export const validationMessages = {
 export const validation = {
   required: (value: string, fieldName?: string): string => {
     if (value && value.trim() !== '') return ''
-    return validationMessages.error.required(fieldName)
+    return message.error.required(fieldName)
   },
 
   email: (value: string): string => {
@@ -25,7 +25,7 @@ export const validation = {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (emailRegex.test(value)) return ''
-    return validationMessages.error.email
+    return message.error.email
   },
 
   minLength:
@@ -33,7 +33,7 @@ export const validation = {
     (value: string, fieldName?: string): string => {
       if (!value || value.length >= minLength) return ''
 
-      const errorMsg = validationMessages.error.minLength(minLength)
+      const errorMsg = message.error.minLength(minLength)
       return fieldName ? `${fieldName} ${errorMsg.toLowerCase()}` : errorMsg
     },
 
@@ -42,7 +42,7 @@ export const validation = {
     (value: string, fieldName?: string): string => {
       if (!value || value.length <= maxLength) return ''
 
-      const errorMsg = validationMessages.error.maxLength(maxLength)
+      const errorMsg = message.error.maxLength(maxLength)
       return fieldName ? `${fieldName} ${errorMsg.toLowerCase()}` : errorMsg
     },
 
@@ -51,7 +51,7 @@ export const validation = {
     (value: number, fieldName?: string): string => {
       if (value >= minValue) return ''
 
-      const errorMsg = validationMessages.error.minValue(minValue)
+      const errorMsg = message.error.minValue(minValue)
       return fieldName ? `${fieldName} ${errorMsg.toLowerCase()}` : errorMsg
     },
 
@@ -60,13 +60,13 @@ export const validation = {
     (value: number, fieldName?: string): string => {
       if (value <= maxValue) return ''
 
-      const errorMsg = validationMessages.error.maxValue(maxValue)
+      const errorMsg = message.error.maxValue(maxValue)
       return fieldName ? `${fieldName} ${errorMsg.toLowerCase()}` : errorMsg
     },
 
   passwordMatch: (password: string, confirmPassword: string): string => {
     if (password === confirmPassword) return ''
-    return validationMessages.error.confirmPassword
+    return message.error.confirmPassword
   },
 
   passwordStrength: (password: string): string => {
@@ -74,7 +74,7 @@ export const validation = {
 
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
     if (passwordRegex.test(password)) return ''
-    return validationMessages.error.password
+    return message.error.password
   },
 
   phone: (phone: string): string => {
@@ -82,7 +82,7 @@ export const validation = {
 
     const phoneRegex = /^\+\d{1,3}\s?\d{3}\d{3}\d{4}$/
     if (phoneRegex.test(phone)) return ''
-    return validationMessages.error.phone
+    return message.error.phone
   },
 } as const
 

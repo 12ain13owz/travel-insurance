@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import flatpickr from 'flatpickr'
 import { Instance } from 'flatpickr/dist/types/instance'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { DateFormat } from '../../const/date-format.const'
+import { Validation } from '../../types/validate.type'
 import { cn } from '../../utils/css.utils'
 
 interface DatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
@@ -12,12 +14,48 @@ interface DatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInputElemen
   format?: DateFormat
   value?: string
   onChange?: (date: string) => void
+  validate?: ((value: Validation, fieldName?: string) => string)[]
+  errorMessage?: string
+}
+
+const validateField = ({
+  value,
+  validators,
+  fieldName,
+}: {
+  value: any
+  validators?: ((value: Validation, fieldName?: string) => string)[]
+  fieldName?: string
+}): string => {
+  if (!validators || value === undefined || typeof value !== 'string') return ''
+
+  for (const validator of validators) {
+    const errorMessage = validator(value as Validation, fieldName)
+    if (errorMessage) return errorMessage
+  }
+
+  return ''
 }
 
 export const DatePicker = React.forwardRef<HTMLInputElement, DatePickerProps>(
-  ({ id, helperText, format = DateFormat.SHORT, value, onChange, required, ...props }, ref) => {
+  (
+    {
+      id,
+      helperText,
+      format = DateFormat.SHORT,
+      value,
+      onChange,
+      validate,
+      errorMessage,
+      ...props
+    },
+    ref
+  ) => {
     const flatpickrRef = useRef<Instance | null>(null)
     const [error, setError] = useState<string | null>(null)
+    const [isTouched, setIsTouched] = useState(false)
+    const displayError = errorMessage || error
+    const inputValue = props.value === undefined || props.value === null ? '' : props.value
 
     useEffect(() => {
       const inputElement = document.getElementById(id) as HTMLInputElement | null

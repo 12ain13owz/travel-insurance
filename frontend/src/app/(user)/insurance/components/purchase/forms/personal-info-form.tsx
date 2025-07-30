@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { ArrowRight, User } from 'lucide-react'
@@ -8,8 +9,12 @@ import { Input } from '@/app/shared/components/forms/input'
 import { Select } from '@/app/shared/components/forms/select'
 import { PurchaseCard } from '@/app/shared/components/ui/purchase-card/purchase-card'
 import { NATIONALITY, RELATIONSHIP } from '@/app/shared/const/select.const'
-import { helperTexts, validation, validationMessages } from '@/app/shared/const/validation.const'
-import { PersonalInfo, PersonalInfoFormState } from '@/app/shared/types/purchase.type'
+import { helperTexts, message, validation } from '@/app/shared/const/validation.const'
+import {
+  PersonalInfo,
+  PersonalInfoFormErrors,
+  PersonalInfoFormState,
+} from '@/app/shared/types/purchase.type'
 
 import PersonalInfoMock from '../mocks/personal-info-mock'
 
@@ -24,42 +29,58 @@ interface PersonalInfoFormProps {
   onNext: (data: PersonalInfo) => void
 }
 
+const validateSchema: Record<keyof PersonalInfoFormErrors, ((value: string) => string | null)[]> = {
+  firstName: [validation.required],
+  lastName: [validation.required],
+  email: [validation.required, validation.email],
+  phone: [validation.required, validation.phone],
+  dateOfBirth: [validation.required],
+}
+
 export default function PersonalInfoForm({ initialData = {}, onNext }: PersonalInfoFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [formState, setFormState] = useState<PersonalInfoFormState>({})
-  const validateChangedFields = (
-    newData: PersonalInfoFormState,
-    updatedFormState: PersonalInfoFormState
-  ) => {
-    const newErrors = { ...errors }
+  const validateField = (
+    key: keyof PersonalInfoFormErrors,
+    value: any
+  ): string | null | undefined => {
+    const rules = validateSchema[key] || []
+    for (const rule of rules) {
+      const error = rule(value)
+      if (error) return error
 
-    if ('firstName' in newData) {
-      if (!updatedFormState.firstName?.trim()) {
-        newErrors.firstName = validationMessages.error.required('First Name')
-      } else {
-        delete newErrors.firstName
-      }
+      return null
     }
+  }
 
-    if ('lastName' in newData) {
-      if (!updatedFormState.lastName?.trim()) {
-        newErrors.lastName = validationMessages.error.required('Last Name')
-      } else {
-        delete newErrors.lastName
-      }
+  const validateForm = (form: PersonalInfoFormState): Record<string, string> => {
+    const newErrors: Record<string, string> = {}
+    for (const key in validateSchema) {
+      const error = validateField(
+        key as keyof PersonalInfoFormErrors,
+        form[key as keyof PersonalInfoFormState]
+      )
+      if (error) newErrors[key] = error
+    }
+    return newErrors
+  }
+
+  const validateChangedFields = (newData: PersonalInfoFormState) => {
+    const newErrors = { ...errors }
+    for (const key of Object.keys(newData)) {
+      const error = validateField(
+        key as keyof PersonalInfoFormErrors,
+        newData[key as keyof PersonalInfoFormState]
+      )
+      if (error) newErrors[key] = error
+      else delete newErrors[key]
     }
 
     setErrors(newErrors)
   }
 
   const validateAllField = () => {
-    const newErrors: Record<string, string> = {}
-
-    if (!formState.firstName?.trim())
-      newErrors.firstName = validationMessages.error.required('First Name')
-    if (!formState.lastName?.trim())
-      newErrors.lastName = validationMessages.error.required('Last Name')
-
+    const newErrors = validateForm(formState)
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -74,7 +95,7 @@ export default function PersonalInfoForm({ initialData = {}, onNext }: PersonalI
           : prev.emergencyContact,
       }
 
-      validateChangedFields(data, updatedState)
+      validateChangedFields(data)
       return updatedState
     })
   }
@@ -118,7 +139,7 @@ export default function PersonalInfoForm({ initialData = {}, onNext }: PersonalI
               validate={[validation.required]}
               errorMessage={errors.lastName}
             ></Input>
-            {/*
+
             <Input
               id="email"
               label="Email"
@@ -126,9 +147,10 @@ export default function PersonalInfoForm({ initialData = {}, onNext }: PersonalI
               placeholder="Enter email"
               value={formState.email}
               onChange={(e) => updateFormState({ email: e.target.value })}
-              validate={[validation.REQUIRED, validation.EMAIL]}
-            ></Input> */}
-            {/*
+              validate={[validation.required, validation.email]}
+              errorMessage={errors.email}
+            ></Input>
+
             <Input
               id="phone"
               label="Phone number"
@@ -136,19 +158,20 @@ export default function PersonalInfoForm({ initialData = {}, onNext }: PersonalI
               placeholder="Enter phone number"
               value={formState.phone}
               onChange={(e) => updateFormState({ phone: e.target.value })}
-              required
-              pattern={validationPatterns.PHONE}
+              validate={[validation.required, validation.phone]}
+              errorMessage={errors.phone}
               helperText={helperTexts.PHONE}
-            ></Input> */}
+            ></Input>
 
-            {/* <DatePicker
+            <DatePicker
               id="dateOfBirth"
               label="Date of Birth"
               placeholder="Select date of birth"
-              value={dateOfBirth}
-              onChange={handleDateOfBirth}
-              required
-            ></DatePicker> */}
+              value={formState.dateOfBirth?.toString()}
+              onChange={(e) => updateFormState({ dateOfBirth: new Date(e) })}
+              validate={[validation.required]}
+              errorMessage={errors.dateOfBirth}
+            ></DatePicker>
 
             {/* <Select
               id="nationality"
